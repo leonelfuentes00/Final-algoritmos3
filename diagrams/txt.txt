@@ -1,0 +1,300 @@
+class AuthController
+    void login():
+    void logout():
+    void registerClient():
+    verifyCredentials()
+
+class User
+    Private
+    -int id;
+    -string username;
+    -string passwordHash;
+    -string email;
+
+    Public
+    -int getId;
+    - string getNombre();
+    - string setNombre();
+    - string getEmail();
+    - string setEmail();
+    - string getUsername();
+    - string setUsername();
+    - bool +verificarPassword();
+    - void setPasswordHash();
+
+    -virtual void crear();
+    -virtual void leer();
+    -virtual void actualizar();
+    -virtual void eliminar();
+
+class Client
+    private:
+    -int id;
+    -string telefono;
+    -string direccion;
+
+    public:
+    -Cliente(int id, const string& nombre, const string& email);
+    -int getId();
+    -const string& getNombre();
+    -const string& getEmail();
+    -const string& getTelefono();
+    -const string& getDireccion();
+    -void setTelefono() (const string&);
+    -void setDireccion() (const string&);
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class clientController
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+    -void listar();
+
+abstract class employee
+    protected:
+    -int id;
+    -shared_ptr<CategoriaEmpleado> categoria;
+
+    public:
+    -Empleado (int id, const string& nombre, const string& email);
+    -virtual ~Empleado() = default;
+
+    -int getId();
+    -const string& getNombre();
+    -const string& getEmail();
+    -shared_ptr<CategoriaEmpleado> getCategoria();
+    -void setCategoria (const shared_ptr<CategoriaEmpleado>&);
+
+    -virtual void crear();
+    -virtual void leer();
+    -virtual void acrualizr();
+    -virtual void aliminar();
+
+class EmployeeController:
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+    -void listar();
+
+class Administrador: public Empleado
+    public:
+    -using Empleado::Empleado;
+    -void crearUsuarios();
+    -void gestionarCategorias();
+
+class Operador: public Empleado
+    public:
+    -using Empleado::Empleado;
+    -void asignarTicket(const shared_ptr<Ticket>&);
+    -void generarReporte();
+
+class tecnico: public Empleado
+    private:
+    -vector<shared_ptr<Trabajo>> trabajos;
+
+    public:
+    -using Empleado:: Empleado;
+    -void asignarTrabajo(const shared_ptr<Trabajo>&);
+    -const vector <shared_ptr<Trabajo>>& getTrabajos();
+    
+class employeeCategory
+    private:
+    -int id;
+    -string nombre;
+    -string descripcion;
+
+    public:
+    -CategoriaEmpleado(int id, const string& nombre);
+    -int getId();
+    -const string& getNombre();
+    -const string& getDescripcion();
+    -void setDescripcion(const string&);
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class work
+    private:
+    -int id;
+    -shared_ptr<Tecnico> tecnico;
+    crhono::system_clock::tine_point fechaInicio;
+    crhono::system_clock::time_point fechaFin;
+    string notas;
+
+    public:
+    -Trabajo( int id, const shared_ptr<Tecnico>& tecnico);
+    -shared_ptr<Tecnico> getTecnico();
+    -void iniciarTrabajo();
+    -void finalizarTrabajo();
+    -void setNotas (const string&);
+    -const string& getNotas();
+
+class service
+    private:
+    -int id;
+    -stringn ommbre;
+    string descripcion;
+    shared_ptr<Rubro> rubro;
+
+    public:
+    -Servicio(int id, const string& nombre);
+    -int getId() ;
+    -const string& getNombre() ;
+    -void setDescripcion(const string&);
+    -shared_ptr<Rubro> getRubro() ;
+    -void asignarRubro(const shared_ptr<Rubro>&);
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class category
+    private:
+    -int id ;
+    -string nomnre;
+    -string descripcion:
+
+    public:
+    -Rubro(int id, const string& nombre);
+    -int getId() ;
+    -const string& getNombre() ;
+    -const string& getDescripcion() ;
+    -void serNombre(const string&);
+    -void setDescripcion(const string&);
+
+class Ticket   
+    private:
+    -int id;
+    -shared_ptr<Cliente> cliente;
+    -shared_ptr<Empleado> usuario;
+    -vector<shared_ptr<Incidente>> incidentes;
+    -vector<shared_ptr<Mensaje>> mensajes;
+    -shared_ptr<Equipo> equipo;
+    -vector<shared_ptr<Servicio>> servicios;
+    - vector<shared_ptr<Empleado>> empleados;
+    -string estado;
+
+    public:
+    -Ticket( int id);
+    -int getId();
+
+    -void asignarCliente(const shared_ptr<Cliente>&);
+    -void asignarUsuario(const shared_ptr<Empleado>&);
+    -void asignarEquipo(const shared_ptr<Equipo>&);
+    -void asignarServicio(const shared_ptr<Servicio>&);
+    -void asignarEmpleado<const shared_ptr<Empleado>&);
+    -void agregarIncidente(const shared_ptr<Incidente>&);
+    -void agregarMensaje(const shared_ptr<Mensaje>&);
+    -void casmbiarEstado(const string&);
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class equipment
+    private:
+    -int id;
+    -string nomnre;
+    -string serial;
+    -shared_ptr<Categoria> categoria;
+
+    public:
+    -Equipo(int id, const string& nombre, const string& serial);
+    -int getId() ;
+    -const string& getNombre();
+    -const string& getSerial();
+    -shared_ptr<Categoria> getCategoria();
+    -void asignatCategoria (const shared_ptr<Categoria>&);
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar(); 
+
+class equipmentcategory 
+    private:
+    -int id;
+    -string nombre;
+    -string descripcion;
+
+    public:
+    -Categoria(int id, const string& nombre);
+    -int getId() ;
+    -const string& getNombre() ;
+    -const sttring& getDescripcion() ;
+    -void setNombre(const string&);
+    -void setDescripcion(const string&);
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class equipmentcontroller
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+    -void listar();
+
+class message
+    private:
+    -int id;
+    -shared_ptr<Empleado> remitente;
+    -crhono::system_clock::time_point fecha;
+    -string contenido;
+
+    public:
+    -Mensaje(int id, const shared_ptr<Empleado>& remitente, const string& contenido);
+    -int getId();
+    -shared_ptr<Empleado> getRemitente();
+    -crhono::system_clock::time_point getFecha();
+    -const string getContenido();
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class messageController
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+    -void listar();
+
+class incidents:
+    private:
+    -int id;
+    -string descripcion;
+    -chrono::system_clock::time_point fecha;
+
+    public:
+    -Incidente (int id, const string& desc);
+    -int getId();
+    -const string& get Descripcion();
+    -crhono::system_clock::time_point getFecha();
+
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+
+class incidentscontroller:
+    -void crear();
+    -void leer();
+    -void actualizar();
+    -void eliminar();
+    -void listar();
+
+class state:
+    enum class {ABIERTO, EN_PROCESO, CERADO, 

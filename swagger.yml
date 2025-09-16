@@ -1,0 +1,181 @@
+swagger: "2.0"
+info:
+  title: API de Tickets e Incidentes
+  description: API RESTFull para gestión de Tickets e Incidentes (versión educativa).
+  version: "1.0.0"
+
+host: localhost:8000
+basePath: /
+schemes:
+  - http
+
+tags:
+  - name: Incidentes
+    description: Operaciones relacionadas con incidentes
+  - name: Tickets
+    description: Operaciones relacionadas con tickets
+
+paths:
+  /api/incidentes/:
+    get:
+      tags:
+        - Incidentes
+      summary: Listar incidentes
+      responses:
+        200:
+          description: Lista de incidentes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Incidente'
+    post:
+      tags:
+        - Incidentes
+      summary: Crear un nuevo incidente
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - descripcion
+              - tipo
+            properties:
+              descripcion:
+                type: string
+                example: Pantalla azul al iniciar
+              tipo:
+                type: string
+                example: Software
+      responses:
+        201:
+          description: Incidente creado
+          schema:
+            $ref: '#/definitions/Incidente'
+
+  /api/incidentes/{incidente_id}:
+    get:
+      tags:
+        - Incidentes
+      summary: Obtener un incidente por ID
+      parameters:
+        - name: incidente_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Incidente encontrado
+          schema:
+            $ref: '#/definitions/Incidente'
+        404:
+          description: Incidente no encontrado
+
+  /api/tickets/:
+    get:
+      tags:
+        - Tickets
+      summary: Listar tickets
+      responses:
+        200:
+          description: Lista de tickets
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Ticket'
+    post:
+      tags:
+        - Tickets
+      summary: Crear un nuevo ticket
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - incidente_id
+            properties:
+              incidente_id:
+                type: integer
+                example: 1
+              cliente_idx:
+                type: integer
+                example: 0
+              servicio_idx:
+                type: integer
+                example: 1
+      responses:
+        201:
+          description: Ticket creado
+          schema:
+            $ref: '#/definitions/Ticket'
+        400:
+          description: Incidente no válido
+
+  /api/tickets/{ticket_id}:
+    get:
+      tags:
+        - Tickets
+      summary: Obtener un ticket por ID
+      parameters:
+        - name: ticket_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Ticket encontrado
+          schema:
+            $ref: '#/definitions/Ticket'
+        404:
+          description: Ticket no encontrado
+
+  /api/tickets/{ticket_id}/close:
+    put:
+      tags:
+        - Tickets
+      summary: Cerrar un ticket
+      parameters:
+        - name: ticket_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Ticket cerrado
+          schema:
+            $ref: '#/definitions/Ticket'
+        404:
+          description: Ticket no encontrado
+
+definitions:
+  Incidente:
+    type: object
+    properties:
+      id:
+        type: integer
+      descripcion:
+        type: string
+      tipo:
+        type: string
+
+  Ticket:
+    type: object
+    properties:
+      id:
+        type: integer
+      cliente:
+        type: string
+      servicio:
+        type: string
+      incidente_id:
+        type: integer
+      estado:
+        type: string
+        enum: [Abierto, Cerrado]
+      fecha_creacion:
+        type: string
+      fecha_cierre:
+        type: string
