@@ -1,7 +1,9 @@
 import sqlite3
 from contextlib import contextmanager
+from pathlib import Path
+from .schema import SCHEMA
 
-DB_PATH = "helpdesk.db"
+DB_PATH = Path(__file__).resolve().parent.parent / "db.sqlite"
 
 def _row_factory(cursor, row):
     return {col[0]: row[idx] for idx, col in enumerate(cursor.description)}
@@ -16,3 +18,7 @@ def get_conn():
         conn.commit()
     finally:
         conn.close()
+
+def init_db() -> None:
+    with get_conn() as c:
+        c.executescript(SCHEMA)

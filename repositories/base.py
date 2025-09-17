@@ -1,5 +1,5 @@
 from typing import Any, Iterable
-from database import get_conn
+from database.database import get_conn
 
 class BaseRepo:
     def fetch_one(self, sql: str, params: Iterable[Any] = ()):

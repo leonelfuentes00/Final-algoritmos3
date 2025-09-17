@@ -1,0 +1,305 @@
+openapi: 3.0.1
+info:
+  title: Helpdesk API
+  version: "1.0.0"
+servers:
+  - url: /
+paths:
+  /auth/register:
+    post:
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password, email]
+              properties:
+                username: {type: string}
+                password: {type: string}
+                email: {type: string}
+                name: {type: string}
+      responses:
+        "201": {description: created}
+  /clients:
+    get:
+      tags: [clients]
+      responses: {"200": {description: ok}}
+    post:
+      tags: [clients]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email]
+              properties:
+                name: {type: string}
+                email: {type: string}
+                phone: {type: string}
+                address: {type: string}
+      responses: {"201": {description: created}}
+  /clients/{id}:
+    get:
+      tags: [clients]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}, "404": {description: not found}}
+    patch:
+      tags: [clients]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      requestBody:
+        content:
+          application/json:
+            schema: {type: object}
+      responses: {"200": {description: ok}}
+    delete:
+      tags: [clients]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}}
+  /employees:
+    get: {tags: [employees], responses: {"200": {description: ok}}}
+    post:
+      tags: [employees]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, employee_type]
+              properties:
+                name: {type: string}
+                email: {type: string}
+                employee_type: {type: string, enum: [ADMINISTRATOR, OPERATOR, TECHNICIAN]}
+                employee_category_id: {type: integer}
+                user_id: {type: integer}
+      responses: {"201": {description: created}}
+  /employees/{id}:
+    get:
+      tags: [employees]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}, "404": {description: not found}}
+    patch:
+      tags: [employees]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      requestBody: {content: {application/json: {schema: {type: object}}}}
+      responses: {"200": {description: ok}}
+    delete:
+      tags: [employees]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}}
+  /categories:
+    get: {tags: [categories], responses: {"200": {description: ok}}}
+    post:
+      tags: [categories]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: {type: string}
+                description: {type: string}
+      responses: {"201": {description: created}}
+  /categories/{id}:
+    patch:
+      tags: [categories]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      requestBody: {content: {application/json: {schema: {type: object, properties: {name: {type: string}, description: {type: string}}}}}}
+      responses: {"200": {description: ok}}
+    delete:
+      tags: [categories]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}}
+  /services:
+    get: {tags: [services], responses: {"200": {description: ok}}}
+    post:
+      tags: [services]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: {type: string}
+                description: {type: string}
+                category_id: {type: integer}
+      responses: {"201": {description: created}}
+  /equipment-categories:
+    get: {tags: [equipment-categories], responses: {"200": {description: ok}}}
+    post:
+      tags: [equipment-categories]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: {type: string}
+                description: {type: string}
+      responses: {"201": {description: created}}
+  /equipment:
+    get: {tags: [equipment], responses: {"200": {description: ok}}}
+    post:
+      tags: [equipment]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, serial]
+              properties:
+                name: {type: string}
+                serial: {type: string}
+                equipment_category_id: {type: integer}
+      responses: {"201": {description: created}}
+  /teams:
+    get: {tags: [teams], responses: {"200": {description: ok}}}
+    post:
+      tags: [teams]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: {type: string}
+                description: {type: string}
+      responses: {"201": {description: created}}
+  /teams/{teamId}/members:
+    post:
+      tags: [teams]
+      parameters: [{in: path, name: teamId, required: true, schema: {type: integer}}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [employee_id]
+              properties:
+                employee_id: {type: integer}
+      responses: {"200": {description: ok}}
+  /tickets:
+    get: {tags: [tickets], responses: {"200": {description: ok}}}
+    post:
+      tags: [tickets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [client_id]
+              properties:
+                client_id: {type: integer}
+                reporter_employee_id: {type: integer}
+                team_id: {type: integer}
+      responses: {"201": {description: created}}
+  /tickets/{id}:
+    get:
+      tags: [tickets]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}, "404": {description: not found}}
+  /tickets/{id}/state:
+    patch:
+      tags: [tickets]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: object, required: [state], properties: {state: {type: string, enum: [OPEN, IN_PROGRESS, RESOLVED, CLOSED]}}}
+      responses: {"200": {description: ok}}
+  /tickets/{id}/employees:
+    post:
+      tags: [tickets]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: object, required: [employee_id], properties: {employee_id: {type: integer}}}
+      responses: {"200": {description: ok}}
+  /tickets/{id}/services:
+    post:
+      tags: [tickets]
+      parameters: [{in: path, name: id, required: true, schema: {type: integer}}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {type: object, required: [service_id], properties: {service_id: {type: integer}}}
+      responses: {"200": {description: ok}}
+  /incidents:
+    post:
+      tags: [incidents]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ticket_id, description]
+              properties:
+                ticket_id: {type: integer}
+                description: {type: string}
+      responses: {"201": {description: created}}
+  /incidents/by-ticket/{ticketId}:
+    get:
+      tags: [incidents]
+      parameters: [{in: path, name: ticketId, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}}
+  /messages:
+    post:
+      tags: [messages]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ticket_id, sender_employee_id, content]
+              properties:
+                ticket_id: {type: integer}
+                sender_employee_id: {type: integer}
+                content: {type: string}
+      responses: {"201": {description: created}}
+  /messages/by-ticket/{ticketId}:
+    get:
+      tags: [messages]
+      parameters: [{in: path, name: ticketId, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}}
+  /work:
+    post:
+      tags: [work]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [technician_employee_id, ticket_id]
+              properties:
+                technician_employee_id: {type: integer}
+                ticket_id: {type: integer}
+                start_at: {type: string}
+                end_at: {type: string}
+                notes: {type: string}
+      responses: {"201": {description: created}}
+  /work/by-ticket/{ticketId}:
+    get:
+      tags: [work]
+      parameters: [{in: path, name: ticketId, required: true, schema: {type: integer}}]
+      responses: {"200": {description: ok}}
