@@ -1,4 +1,4 @@
-class Work:
+class WorkLog:
     def __init__(self, id=None, technician_employee_id=None, ticket_id=None,
                  start_at=None, end_at=None, notes=None):
         self.id = id

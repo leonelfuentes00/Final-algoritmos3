@@ -1,4 +1,4 @@
-class Category:
+class Industry:
     def __init__(self, id=None, name=None, description=None):
         self.id = id
         self.name = name
