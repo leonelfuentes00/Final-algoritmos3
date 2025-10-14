@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.service_repo import ServiceRepo
 
-bp = Blueprint("services", __name__, url_prefix="/services")
+bp = APIBlueprint("services", __name__, url_prefix="/services")
 repo = ServiceRepo()
 
 @bp.post("")

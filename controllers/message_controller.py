@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.message_repo import MessageRepo
 
-bp = Blueprint("messages", __name__, url_prefix="/messages")
+bp = APIBlueprint("messages", __name__, url_prefix="/messages")
 repo = MessageRepo()
 
 @bp.post("")

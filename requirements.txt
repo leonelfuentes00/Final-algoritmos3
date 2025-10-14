@@ -1,4 +1,5 @@
 flask
-flasgger
 flask-cors
 pyyaml
+flask-openapi3
+flask_swagger_ui

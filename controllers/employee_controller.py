@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.employee_repo import EmployeeRepo
 
-bp = Blueprint("employees", __name__, url_prefix="/employees")
+bp = APIBlueprint("employees", __name__, url_prefix="/employees")
 repo = EmployeeRepo()
 
 @bp.post("")

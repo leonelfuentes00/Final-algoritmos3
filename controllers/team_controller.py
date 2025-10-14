@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.team_repo import TeamRepo
 
-bp = Blueprint("teams", __name__, url_prefix="/teams")
+bp = APIBlueprint("teams", __name__, url_prefix="/teams")
 repo = TeamRepo()
 
 @bp.post("")

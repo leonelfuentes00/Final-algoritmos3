@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.user_repo import UserRepo
 
-bp = Blueprint("auth", __name__, url_prefix="/auth")
+bp = APIBlueprint("auth", __name__, url_prefix="/auth")
 repo = UserRepo()
 
 @bp.post("/register")

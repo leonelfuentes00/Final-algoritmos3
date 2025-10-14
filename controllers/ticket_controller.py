@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.ticket_repo import TicketRepo
 
-bp = Blueprint("tickets", __name__, url_prefix="/tickets")
+bp = APIBlueprint("tickets", __name__, url_prefix="/tickets")
 repo = TicketRepo()
 
 @bp.post("")

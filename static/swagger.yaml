@@ -1,0 +1,151 @@
+openapi: "3.0.3"
+info:
+  title: API de Tickets e Incidentes
+  description: API RESTFull para gestión de Tickets e Incidentes (versión educativa)
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000
+    description: Servidor local
+
+tags:
+  - name: Incidentes
+    description: Operaciones relacionadas con incidentes
+  - name: Tickets
+    description: Operaciones relacionadas con tickets
+
+paths:
+  /api/incidentes/:
+    get:
+      tags: [Incidentes]
+      summary: Listar incidentes
+      responses:
+        "200":
+          description: Lista de incidentes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Incidente'
+    post:
+      tags: [Incidentes]
+      summary: Crear un nuevo incidente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - descripcion
+                - tipo
+              properties:
+                descripcion:
+                  type: string
+                  example: Pantalla azul al iniciar
+                tipo:
+                  type: string
+                  example: Software
+      responses:
+        "201":
+          description: Incidente creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incidente'
+
+  /api/incidentes/{incidente_id}:
+    get:
+      tags: [Incidentes]
+      summary: Obtener un incidente por ID
+      parameters:
+        - name: incidente_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Incidente encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incidente'
+        "404":
+          description: Incidente no encontrado
+
+  /api/tickets/:
+    get:
+      tags: [Tickets]
+      summary: Listar tickets
+      responses:
+        "200":
+          description: Lista de tickets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticket'
+    post:
+      tags: [Tickets]
+      summary: Crear un nuevo ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - incidente_id
+              properties:
+                incidente_id:
+                  type: integer
+                  example: 1
+                cliente_idx:
+                  type: integer
+                  example: 0
+                servicio_idx:
+                  type: integer
+                  example: 1
+      responses:
+        "201":
+          description: Ticket creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticket'
+        "400":
+          description: Incidente no válido
+
+components:
+  schemas:
+    Incidente:
+      type: object
+      properties:
+        id:
+          type: integer
+        descripcion:
+          type: string
+        tipo:
+          type: string
+
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+        cliente:
+          type: string
+        servicio:
+          type: string
+        incidente_id:
+          type: integer
+        estado:
+          type: string
+          enum: [Abierto, Cerrado]
+        fecha_creacion:
+          type: string
+        fecha_cierre:
+          type: string

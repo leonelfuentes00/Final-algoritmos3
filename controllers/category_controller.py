@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask_openapi3 import APIBlueprint
+from flask import request
 from repositories.category_repo import CategoryRepo
 
-bp = Blueprint("categories", __name__, url_prefix="/categories")
+bp = APIBlueprint("categories", __name__, url_prefix="/categories")
 repo = CategoryRepo()
 
 @bp.post("")
